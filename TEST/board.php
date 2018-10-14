@@ -26,9 +26,9 @@
   </style>
 
   <?php
-  require_once("/home/test01/www/PHP/tools.php");
+  require_once("./../tools.php");
   require_once("BoardDao.php");
-  require_once("/home/test01/www/PHP/memberDAO.php");
+  require_once("./../memberDAO.php");
     /*
     1. DB에 등록된 게시글 리스트를 인출(boardDao.php)
     2. 2차원 배열로 반환된 게시글 리스트 각각에 대해
@@ -135,7 +135,8 @@ page link 만들어 주기
     if($currentPage < 1)
       $currentPage = 1;
     $msgs = $Bdao->getManyMesgs(NUM_LINES*($currentPage-1),NUM_LINES);
-  ?>
+  echo "왜 안나와";
+	?>
 </head>
 <body>
   <div class="container">
@@ -219,8 +220,6 @@ page link 만들어 주기
     if($currentPage != $totalPage)
       echo "<li class='page-item'><a class='page-link' href='http://192.168.56.101/PHP/TEST/board.php?page=",$totalPage,"'>끝</a></li>";
     echo "</ul>";
-    }else{
-      echo "게시글이 없습니다.";
     }
   ?>
 

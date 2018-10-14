@@ -1,5 +1,5 @@
 <?php
-  require_once("/home/test01/www/PHP/tools.php");
+  require_once("./../tools.php");
   require_once("BoardDao.php");
 	require_once("recomment.php");
   /*
@@ -60,6 +60,40 @@
       }
 
     </style>
+	<script>
+		function mkform(num){
+			alert(num);
+			var formtag = document.createElement("form");
+			formtag.setAttribute("action", "comment.php");
+			formtag.setAttribute("method", "post");
+			formtag.setAtrribute("class", "form");
+			
+			var labeltag = document.createElement("label");
+			labeltag.setAttribute("for","content");
+			formtag.appendChild(labeltag);
+
+			var textareatag = document.createElement("textarea");
+			textareatag.setAttribute("class","form-control");
+			textareatag.setAttribute("row","2");
+			textareatag.setAttribute("id","content");			
+			textareatag.setAttribute("name","content");
+			formtag.appendChild(textareatag);
+
+			var inputtag = document.createElement("input");
+			inputtag.setAttribute("type", "hidden");
+			inputtag.setAttribute("name", "post_num");
+			inputtag.setAttribute("value", "<?=$num?>");
+			formtag.appendChild(inputtag);
+
+			var buttontag = document.createElement("button");
+			buttontag.setAttribute("type", "submit");
+			buttontag.setAttribute("class", "btn btn-primary");
+			formtag.appendChild(buttontag);
+
+			document.body.appendChild(formtag);
+
+		}
+	</script>
   </head>
   <body>
 	<h1><?=$num?></h1>
@@ -94,8 +128,8 @@
 			<?php
 				foreach($comment as $row) :?>
 
-          <li class="list-group-item list-group-item-primary">
-            <?= $row["name"]." : ".$row["content"]. $row["regtime"] ?><button onclick="location.href='deleteComment.php?num=<?=$row["writer"]?>'">댓글삭제</button>
+          <li class="list-group-item list-group-item-primary" onclick="mkform(<?=$row["num"]?>);">
+            <?= $row["name"]." : ".$row["content"]. $row["regtime"] ?><button onclick="location.href='deleteComment.php?num=<?=$row["num"]?>'">댓글삭제</button>
           </li>
   			  <?php
   				  mkComment($row["num"]);

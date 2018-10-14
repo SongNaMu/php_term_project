@@ -55,7 +55,7 @@
     //생성자
     public function __construct(){
       try{
-        $this->db = new PDO("mysql:host=localhost;dbname=php","root","");
+        $this->db = new PDO("mysql:host=localhost;dbname=php","root","123456");
         $this->db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
       }catch(PDOException $e){
         exit($e->getMessage());
@@ -190,6 +190,21 @@
 			return $result;
 		}
 
+		//댓글 번호를 입력받아 그 댓글의 정보를 반환하는 함수
+		function getCommentInfo($num){
+			try{
+				$sql = "select * from comment where num = :num";
+				$pstmt = $this->db->prepare($sql);
+				$pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+
+				$pstmt->execute();
+				$result = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+			}catch(PDOException $e){
+				exit($e->getMessage());
+			}
+			return $result;
+		}
+
 		//댓글의 댓글
 		function getRecomment($mcomment_num){
 			try{
@@ -231,5 +246,5 @@
         $e->getMessage();
       }
     }
-	}
+}
 ?>

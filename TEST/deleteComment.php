@@ -8,15 +8,23 @@
   */
 
   require_once("BoardDao.php");
-  require_once("/home/test01/www/PHP/tools.php");
+  require_once("./../tools.php");
 
   session_start();
 
-  $id = requestValue("id");
   $db = new BoardDao();
-
+  $num = requestValue("num");
+  //댓글쓴이의 id
+  $commentInfo = $db->getCommentInfo($num);
+	if(!$commentInfo){
+		errorBack("없는 댓글입니다.");
+	}
+  $id = $commentInfo[0]['writer'];
   if($_SESSION["id"] == $id){
-    $db->deleteComment()
+    $db->deleteComment($num);
+	okGo("댓글이 삭제되었습니다.","view.php?num=".$commentInfo[0]['post_num']."");
+  }else{
+	errorBack("자신이 쓴 댓글만 지울 수 있습니다");
   }
 
 

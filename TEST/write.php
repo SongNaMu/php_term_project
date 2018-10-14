@@ -1,5 +1,5 @@
 <?php
-  require_once("/home/test01/www/PHP/tools.php");
+  require_once("./../tools.php");
   require_once("BoardDao.php");
 
   /*
