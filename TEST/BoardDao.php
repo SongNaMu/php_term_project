@@ -48,7 +48,25 @@
 댓글 내용 content
 댓글 쓴 시간 regtime
 부모 댓글(num) (댓글에 달리는 댓글을 만들기 위해 사용) mcomment_num
-*/
+
+4. 조회수 view
++----------+------------+------+-----+---------+-------+
+| Field    | Type       | Null | Key | Default | Extra |
++----------+------------+------+-----+---------+-------+
+| post_num | int(11)    | YES  |     | NULL    |       |
+| count    | bigint(21) | NO   |     | 0       |       |
++----------+------------+------+-----+---------+-------+
+count는 조회수 테이블에서 각 post_num이 가지는 user_id의 갯수
+5.조회수 테이블
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| post_num | int(11)     | YES  |     | NULL    |       |
+| user_id  | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+ */
+
+ 
   class BoardDao {
     private $db;
 
@@ -81,8 +99,15 @@
     //회원번호 반환 함수
     function getMsg($num){
       try{
-        $sql = "select b.num, b.title, b.content, b.regtime, b.hits, b.writer, m.name
-        from board b join member m on b.writer = m.id and num = :num";
+       // $sql = "select b.num, b.title, b.content, b.regtime, b.hits, b.writer, m.name
+       // from board b join member m on b.writer = m.id and num = :num";
+		$sql = "select b.num, b.title, b.content, b.regtime, m.name, nvl(h.count, 0) hits
+				from board b
+				left join post_hits h
+				on b.num = h.post_num
+				join member m
+				on b.writer = m.id
+				where num = :num";
         $pstmt = $this->db->prepare($sql);
         $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
         $pstmt->execute();
@@ -130,7 +155,14 @@
       //게시판에서는 아이디가 아닌 닉네임 노출
 
       try{
-        $sql = "select  b.num, b.title, b.regtime, b.hits, m.name from board b join member m on b.writer = m.id order by regtime limit :startRecord, :count";
+        $sql = "select b.num, b.title, b.regtime, m.name, nvl(h.count, 0) hits 
+				from board b 
+				left join post_hits h
+				on b.num = h.post_num
+				join member m
+				on b.writer = m.id
+				order by regtime
+				limit :startRecord, :count";
         $pstmt = $this->db->prepare($sql);
         $pstmt->bindValue(":startRecord", $startRecord, PDO::PARAM_INT);
         $pstmt->bindValue(":count", $count, PDO::PARAM_INT);
@@ -262,5 +294,34 @@
         $e->getMessage();
       }
     }
+	//조회수 테이블에 아이디와 게시글 번호 입력
+	function insertHits($post_num, $user_id){
+	  try{
+		$sql = "insert into hits(post_num, user_id) values(:post_num, :user_id);";
+		$pstmt = $this->db->prepare($sql);
+		$pstmt->bindValue(":post_num", $post_num, PDO::PARAM_INT);
+		$pstmt->bindValue(":user_id", $user_id, PDO::PARAM_STR);
+
+		$pstmt->execute();
+	  }catch(PDOException $e){
+	    $e->getMessage();
+	  }
+	
+	}
+	//조회수 테이블 조회
+	function checkHits($post_num, $user_id){
+	  try{
+	    $sql = "select * from hits where post_num = :post_num and user_id = :user_id";
+		$pstmt = $this->db->prepare($sql);
+		$pstmt->bindValue(":post_num",$post_num, PDO::PARAM_INT);
+		$pstmt->bindValue(":user_id", $user_id, PDO::PARAM_STR);
+		
+		$pstmt->execute();
+		$result = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+	  }catch(PDOException $e){
+	    $e->getMessage();
+	  }
+	  return $result;
+	}
 }
 ?>

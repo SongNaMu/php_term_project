@@ -1,7 +1,8 @@
 <?php
   require_once("./../tools.php");
   require_once("BoardDao.php");
-	require_once("recomment.php");
+  require_once("recomment.php");
+  require_once("checkHits.php");
   /*
     글 상세보기
     1. 세션id를 이용해 로그인한 이용자만 상세내용을 볼수있음
@@ -10,7 +11,7 @@
     2. request에서 글의 id를 추출
     3. 해당 번호의 글을 읽고, 조회 수 1 증가
   */
-  session_start();
+  //session_start();
   if(!isset($_SESSION["id"])){
     okGo("상세보기는 회원만 할 수 있습니다.","login_form.php");
   }
@@ -19,7 +20,8 @@
   $dao = new BoardDao();
   $dao->increseHits($num);
   $msg = $dao->getMsg($num);
-	$comment = $dao->getComment($num);
+  $comment = $dao->getComment($num);
+  checkHits($num);
 
 ?>
 <!doctype html>
