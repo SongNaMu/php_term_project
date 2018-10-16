@@ -18,10 +18,9 @@
 	//num = 게시글 번호
   $num = requestValue("num");
   $dao = new BoardDao();
-  $dao->increseHits($num);
+  checkHits($num);
   $msg = $dao->getMsg($num);
   $comment = $dao->getComment($num);
-  checkHits($num);
 
 ?>
 <!doctype html>

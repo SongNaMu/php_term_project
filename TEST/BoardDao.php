@@ -118,17 +118,6 @@ count는 조회수 테이블에서 각 post_num이 가지는 user_id의 갯수
       return $result;
     }
 
-    //조회수 증가 함수
-    function increseHits($num){
-      try{
-        $sql = "update board set hits = hits+1 where num=:num";
-        $pstmt = $this->db->prepare($sql);
-        $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
-        $pstmt->execute();
-      }catch(PDOException $e){
-        exit($e->getMessage());
-      }
-    }
 
     //게시글 삭제 함수
     function delete($num){
