@@ -23,7 +23,7 @@
       $_SESSION["name"] = $member["name"];
 
       //메인 페이지로 이동
-      okGo("로그인에 성공했습니다.! ".$_SESSION["id"], "board.php");
+      okGo("로그인에 성공했습니다! ","board.php");
 
     }else{//아이디가 없거나 비번이 틀리다.
       errorBack("없는 아이디이거나 비밀번호가 틀립니다.");

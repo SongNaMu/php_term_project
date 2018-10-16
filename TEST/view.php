@@ -41,6 +41,10 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <style>
+	  .hiddenform{
+	    display : none;
+		margin-left : 20px;
+	  }
       .comment{
         border-top-style: solid;
         margin-bottom : 3px;
@@ -62,36 +66,18 @@
     </style>
 	<script>
 		function mkform(num){
-			alert(num);
-			var formtag = document.createElement("form");
-			formtag.setAttribute("action", "comment.php");
-			formtag.setAttribute("method", "post");
-			formtag.setAtrribute("class", "form");
-			
-			var labeltag = document.createElement("label");
-			labeltag.setAttribute("for","content");
-			formtag.appendChild(labeltag);
+		  divEl = document.getElementById(num);	
+		  classN = document.getElementsByClassName("hiddenform");
 
-			var textareatag = document.createElement("textarea");
-			textareatag.setAttribute("class","form-control");
-			textareatag.setAttribute("row","2");
-			textareatag.setAttribute("id","content");			
-			textareatag.setAttribute("name","content");
-			formtag.appendChild(textareatag);
-
-			var inputtag = document.createElement("input");
-			inputtag.setAttribute("type", "hidden");
-			inputtag.setAttribute("name", "post_num");
-			inputtag.setAttribute("value", "<?=$num?>");
-			formtag.appendChild(inputtag);
-
-			var buttontag = document.createElement("button");
-			buttontag.setAttribute("type", "submit");
-			buttontag.setAttribute("class", "btn btn-primary");
-			formtag.appendChild(buttontag);
-
-			document.body.appendChild(formtag);
-
+		  if(divEl.style.display == "block"){
+		    divEl.style.display = "none";
+		  }else{
+			for(i=0; i<classN.length; i++){
+			  classN[i].style.display = "none";
+			}
+		    divEl.style.display = "block";
+		  }
+		  console.log(divEl.style.display);
 		}
 	</script>
   </head>
@@ -129,9 +115,24 @@
 				foreach($comment as $row) :?>
 
           <li class="list-group-item list-group-item-primary" onclick="mkform(<?=$row["num"]?>);">
-            <?= $row["name"]." : ".$row["content"]. $row["regtime"] ?><button onclick="location.href='deleteComment.php?num=<?=$row["num"]?>'">댓글삭제</button>
+            <?= $row["name"]." : ".$row["content"]." <b>". $row["regtime"]."</b>" ?><button onclick="location.href='deleteComment.php?num=<?=$row["num"]?>'">댓글삭제</button>
           </li>
-  			  <?php
+  		  
+		  <div class="hiddenform" id="<?= $row["num"] ?>">
+	  		<form class="form" action="insertRecomment.php" method="post">
+	   		  <div class="form-group">
+		  		<label for="content"><b>작성자 : <?=$_SESSION["name"] ?></b></label>
+		  		<textarea class="form-control" row="2" id="content" name="content"></textarea>
+				<input type="hidden" name="post_num" value="<?= $msg["num"] ?>">
+				<input type="hidden" name="mcomment_num" value="<?= $row["num"] ?>">
+	    	  </div>
+  			  <div class="form-group">
+  				<button type="submit" class="btn btn-primary">댓글등록</button>
+  			  </div>
+			</form>
+		  </div>
+
+		 	 <?php
   				  mkComment($row["num"]);
   				?>
 
@@ -142,7 +143,7 @@
 
 	  <form class="form" action="comment.php" method="post">
 	    <div class="form-group">
-		  <label for="content"><b>작성자 : <?=$_SESSION["name"] ?><b></label>
+		  <label for="content"><b>작성자 : <?=$_SESSION["name"] ?></b></label>
 		  <textarea class="form-control" row="2" id="content" name="content"></textarea>
 			<input type="hidden" name="post_num" value="<?= $msg["num"] ?>">
 	    </div>
@@ -155,5 +156,6 @@
     <input type="button" class="btn btn-success" onclick="location.href='modify_form.php?num=<?= $num ?>'" value="수정">
     <input type="button" class="btn btn-danger" onclick="location.href='delete.php?num=<?= $num ?>'" value="삭제">
 	</div>
-  </body>
+  
+	</body>
 </html>

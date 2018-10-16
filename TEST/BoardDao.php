@@ -173,6 +173,22 @@
 		  }
 	  }
 
+	//댓글의 댓글 저장 함수
+	  function insertRecomment($post_num, $writer, $content, $mcomment_num){
+	    try{
+	  		$sql = "insert into comment(post_num, writer, content, mcomment_num)
+        values(:post_num, :writer, :content, :mcomment_num)";
+		  	$pstmt = $this->db->prepare($sql);
+		  	$pstmt->bindValue(":post_num", $post_num, PDO::PARAM_INT);
+		  	$pstmt->bindValue(":writer", $writer, PDO::PARAM_STR);
+		  	$pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+			$pstmt->bindValue("mcomment_num", $mcomment_num, PDO::PARAM_INT);
+
+	  		$pstmt->execute();
+	  	}catch(PDOException $e){
+		  	exit($e->getMessage());
+		  }
+	  }
 		//게시글 번호를 입력받아 해당 게시글의 댓글을 반환하는 함수
 		function getComment($num){
 			try{
