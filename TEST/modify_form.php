@@ -22,11 +22,12 @@
   <?php
     require_once("BoardDao.php");
     require_once("./../tools.php");
-
+	
     $db = new BoardDao();
     $num = requestValue("num");
-    $row = $db->getMsg($num);
-
+	$currentPage = requestValue("page");
+	$row = $db->getMsg($num);
+	
 	/* 게시글 수정 폼
 	  1. 세션의 유무 확인
 	   1.1 세션의 id와 글작성자의id가 일치하는지 확인
@@ -46,7 +47,7 @@
 <div class="container">
 <h2>수정 폼</h2>
 <p>수정해 주세요</p>
-<form action="modify.php?num=<?=$num?>" method="post">
+<form action="modify.php?num=<?=$num?>&page=<?=$currentPage?>" method="post">
   <div class="form-group">
     <label for="title">제목 :</label>
     <input type="text" class="form-control" id="title" name="title" value="<?=$row["title"]?>">

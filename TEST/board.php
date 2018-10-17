@@ -132,10 +132,10 @@ page link 만들어 주기
     */
     $totalCount = $Bdao->getNumMsgs();
     $currentPage = requestValue("page");
-    if($currentPage < 1)
+    if($currentPage < 1 | !$currentPage)
       $currentPage = 1;
     $msgs = $Bdao->getManyMesgs(NUM_LINES*($currentPage-1),NUM_LINES);
-  echo "왜 안나와";
+  echo "왜 안나와 currentPage = $currentPage,".NUM_LINES*($currentPage-1).", ".NUM_LINES."";
 	?>
 </head>
 <body>
@@ -186,13 +186,13 @@ page link 만들어 주기
     $startRecord = ($currentPage-1)*NUM_LINES;
 
   //echo "current = $currentPage<br>";
-//  echo "totalcount = ".$totalCount["count"] ." <br> totalPage = $totalPage<br>";
-//  echo "startPage = ".$startPage ." <br> endPage = $endPage<br>";
+  //echo "totalcount = ".$totalCount["count"] ." <br> totalPage = $totalPage<br>";
+  //echo "startPage = ".$startPage ." <br> endPage = $endPage<br>";
 
   foreach($msgs as $row){?>
   <tr>
     <td><?= $row["num"] ?></td>
-    <td><a href="view.php?num=<?= $row["num"]?>"><?= $row["title"] ?></a></td>
+    <td><a href="view.php?num=<?= $row["num"]?>&page=<?=$currentPage ?>"><?= $row["title"] ?></a></td>
     <td><?= $row["name"] ?></td>
     <td><?= $row["regtime"] ?></td>
     <td><?= $row["hits"] ?></td>
@@ -206,19 +206,19 @@ page link 만들어 주기
   <?php
     echo "<ul class='pagination justify-content-center'>";
     if($currentPage != 1)
-      echo "<li class='page-item'><a class='page-link' href='http://192.168.56.101/PHP/TEST/board.php?page=1'>처음</a></li>";
+      echo "<li class='page-item'><a class='page-link' href='./board.php?page=1'>처음</a></li>";
     if($prev == false)
-      echo "<li class='page-item'><a class='page-link' href='http://192.168.56.101/PHP/TEST/board.php?page=",$startPage-1,"'>이전</a></li>";
+      echo "<li class='page-item'><a class='page-link' href='./board.php?page=",$startPage-1,"'>이전</a></li>";
     for($i = $startPage; $i <= $endPage; $i++){
       if($i == $currentPage)
-        echo "<li class='page-item active'><a class='page-link' href='http://192.168.56.101/PHP/TEST/board.php?page=$i'>".$i."</a></li>";
+        echo "<li class='page-item active'><a class='page-link' href='./board.php?page=$i'>".$i."</a></li>";
       else
-        echo "<li class='page-item'><a class='page-link' href='http://192.168.56.101/PHP/TEST/board.php?page=$i'>".$i."</a></li>";
+        echo "<li class='page-item'><a class='page-link' href='./board.php?page=$i'>".$i."</a></li>";
     }
     if($next == false)
-      echo "<li class='page-item'><a class='page-link' href='http://192.168.56.101/PHP/TEST/board.php?page=",$endPage+1,"'>다음</a></li>";
+      echo "<li class='page-item'><a class='page-link' href='./board.php?page=",$endPage+1,"'>다음</a></li>";
     if($currentPage != $totalPage)
-      echo "<li class='page-item'><a class='page-link' href='http://192.168.56.101/PHP/TEST/board.php?page=",$totalPage,"'>끝</a></li>";
+      echo "<li class='page-item'><a class='page-link' href='./board.php?page=",$totalPage,"'>끝</a></li>";
     echo "</ul>";
     }
   ?>

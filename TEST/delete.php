@@ -11,13 +11,14 @@
 	*/
 
   $num = requestValue("num");
+  $currentPage = requestValue("page");
   $db = new BoardDao();
   $row = $db->getMsg($num);
 
   session_start();
 	if(isset($_SESSION["id"])){
 	  if($_SESSION["id"] != $row["writer"]){
-	    errorBack("이 게시글의 작성자가 아닙니다.");
+	    errorBack("이 게시글의 작성자가 아닙니다.작성자 : ".$row['writer'].",". $_SESSION['id']);
 	  }
 	}else{
 	  errorBack("로그인이 필요합니다.");
@@ -25,6 +26,6 @@
 
 
   $db->delete($num);
-  okGo("글이 삭제되었습니다.","board.php");
+  okGo("글이 삭제되었습니다.","board.php?page=$currentPage");
 
 ?>

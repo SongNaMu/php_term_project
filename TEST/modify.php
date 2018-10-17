@@ -7,7 +7,7 @@
   $num = requestValue("num");
   $title = requestValue("title");
   $content = requestValue("content");
-
+  $currentPage = requestValue("page");
   /* 게시글 수정
 	  1. 세션의 유무 확인
 	   1.1 세션의 id와 글작성자의id가 일치하는지 확인
@@ -27,7 +27,7 @@
   //게시글 수정 함수 호출
   $db->updateContent($num, $title, $content);
 
-  //수정된 게시글의 상세보기 페이지로 이동
-  okGo("글의 수정이 완료 되었습니다. $content ","view.php?num=$num");
+ // 수정된 게시글의 상세보기 페이지로 이동
+  okGo("글의 수정이 완료 되었습니다.","view.php?num=$num&page=$currentPage");
 
 ?>

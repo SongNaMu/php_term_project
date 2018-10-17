@@ -101,7 +101,7 @@ count는 조회수 테이블에서 각 post_num이 가지는 user_id의 갯수
       try{
        // $sql = "select b.num, b.title, b.content, b.regtime, b.hits, b.writer, m.name
        // from board b join member m on b.writer = m.id and num = :num";
-		$sql = "select b.num, b.title, b.content, b.regtime, m.name, nvl(h.count, 0) hits
+		$sql = "select b.num, b.title, b.content, b.regtime, m.name,b.writer, nvl(h.count, 0) hits
 				from board b
 				left join post_hits h
 				on b.num = h.post_num
@@ -150,7 +150,7 @@ count는 조회수 테이블에서 각 post_num이 가지는 user_id의 갯수
 				on b.num = h.post_num
 				join member m
 				on b.writer = m.id
-				order by regtime
+				order by b.regtime, b.num	
 				limit :startRecord, :count";
         $pstmt = $this->db->prepare($sql);
         $pstmt->bindValue(":startRecord", $startRecord, PDO::PARAM_INT);

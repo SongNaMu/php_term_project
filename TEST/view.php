@@ -17,6 +17,7 @@
   }
 	//num = 게시글 번호
   $num = requestValue("num");
+  $currentPage = requestValue("page");
   $dao = new BoardDao();
   checkHits($num);
   $msg = $dao->getMsg($num);
@@ -153,9 +154,9 @@
   		</div>
 
 	  </form>
-    <input type="button" class="btn btn-primary" onclick="location.href='board.php'" value="목록보기">
-    <input type="button" class="btn btn-success" onclick="location.href='modify_form.php?num=<?= $num ?>'" value="수정">
-    <input type="button" class="btn btn-danger" onclick="location.href='delete.php?num=<?= $num ?>'" value="삭제">
+    <input type="button" class="btn btn-primary" onclick="location.href='board.php?page=<?=$currentPage?>'" value="목록보기">
+    <input type="button" class="btn btn-success" onclick="location.href='modify_form.php?num=<?= $num ?>&page=<?=$currentPage ?>'" value="수정">
+    <input type="button" class="btn btn-danger" onclick="location.href='delete.php?num=<?= $num ?>&page=<?=$currentPage?>'" value="삭제">
 	</div>
   
 	</body>
