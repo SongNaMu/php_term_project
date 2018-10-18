@@ -139,6 +139,7 @@ page link 만들어 주기
 	?>
 </head>
 <body>
+  <li><a href="./model/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
   <div class="container">
     <div id="logo"><h2>게시글 리스트</h2></div>
     <div id="btn-group">
