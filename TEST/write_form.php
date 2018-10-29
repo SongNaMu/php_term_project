@@ -46,18 +46,30 @@
     <label for="title">제목 :</label>
     <input type="text" class="form-control" id="title" name="title" >
   </div>
-  <div class="form-group">
-    <!-- 세션에서 사용자의 name을 받아온다. -->
-    <label for="writer">작성자 :</label>
-    <input type="text" class="form-control" id="writer" name="writer" value="<?= $_SESSION["name"]?>"disabled >
-  </div>
-  <div class="form-group">
-    <label for="content">내용 :</label>
- <textarea class="form-control" rows="5" id="content" name="content" ></textarea>	
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-  <input type="button" class="btn btn-primary" onclick="location.href='board.php'" value="목록보기">
-</form>
-  </div>
+  	<div class="form-group">
+   	 <!-- 세션에서 사용자의 name을 받아온다. -->
+   	 <label for="writer">작성자 :</label>
+   	 <input type="text" class="form-control" id="writer" name="writer" value="<?= $_SESSION["name"]?>"disabled >
+  	</div>
+  	<div class="form-group">
+    	<label for="content">내용 :</label>
+			<div id="editSection"></div>
+<!-- <textarea class="form-control" rows="5" id="content" name="content" ></textarea>	-->
+  	</div>
+		<input type="hidden" name="content">
+  <button type="submit" class="btn btn-primary" id="execute">Submit</button>
+</form> 
+ 	<input type="button" class="btn btn-primary" onclick="location.href='board.php'" value="목록보기">
+
+
+<script>
+  var editor = new tui.Editor({
+    el: document.querySelector('#editSection'),
+    initialEditType: 'wysiwyg',
+    previewStyle: 'vertical',
+    height: '300px'
+  });
+</script>
+
 </body>
 </html>
