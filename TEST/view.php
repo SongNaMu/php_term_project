@@ -105,7 +105,7 @@
         </tr>
         <tr>
           <th>내용</th>
-          <td><?= $msg["content"] ?></td>
+          <td id="content"></td>
         </tr>
       </table>
       <hr>
@@ -164,6 +164,10 @@
 			}
 ?>
 	</div>
-  
+	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+		document.getElementById('content').innerHTML=
+			marked('<?= $msg["content"] ?>');
+	</script>
 	</body>
 </html>

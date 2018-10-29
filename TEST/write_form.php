@@ -34,7 +34,7 @@
 	}else{
 	  errorBack("로그인 후에 이용하실수 있습니다.");
 	}
-
+	require_once("./template/header.php");
 ?>
 </head>
 <body>
@@ -56,7 +56,7 @@
 			<div id="editSection"></div>
 <!-- <textarea class="form-control" rows="5" id="content" name="content" ></textarea>	-->
   	</div>
-		<input type="hidden" name="content">
+		<input type="hidden" id="content" name="content">
   <button type="submit" class="btn btn-primary" id="execute">Submit</button>
 </form> 
  	<input type="button" class="btn btn-primary" onclick="location.href='board.php'" value="목록보기">
@@ -67,7 +67,12 @@
     el: document.querySelector('#editSection'),
     initialEditType: 'wysiwyg',
     previewStyle: 'vertical',
-    height: '300px'
+    height: '300px',
+		events: {
+			change: function(){
+				document.getElementById("content").value = this.editor.getValue();
+			}
+		}
   });
 </script>
 
