@@ -22,7 +22,7 @@
   checkHits($num);
   $msg = $dao->getMsg($num);
   $comment = $dao->getComment($num);
-
+	require_once("./template/header.php");
 ?>
 <!doctype html>
 <html>
@@ -155,8 +155,14 @@
 
 	  </form>
     <input type="button" class="btn btn-primary" onclick="location.href='board.php?page=<?=$currentPage?>'" value="목록보기">
+		<?php
+			if($_SESSION["id"] == $msg["writer"]){
+?>
     <input type="button" class="btn btn-success" onclick="location.href='modify_form.php?num=<?= $num ?>&page=<?=$currentPage ?>'" value="수정">
     <input type="button" class="btn btn-danger" onclick="location.href='delete.php?num=<?= $num ?>&page=<?=$currentPage?>'" value="삭제">
+	<?php
+			}
+?>
 	</div>
   
 	</body>

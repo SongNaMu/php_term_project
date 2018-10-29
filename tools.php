@@ -42,4 +42,10 @@
 <?php
     exit();
   }
+	function isLogin(){
+		
+	
+	}
+
+
 ?>

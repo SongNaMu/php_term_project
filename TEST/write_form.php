@@ -6,6 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <!-- Latest compiled and minified CSS -->
+	<script src="../tui/bower_components/jquery/dist/jquery.js"></script>
+	<script src='../tui/bower_components/markdown-it/dist/markdown-it.js'></script>
+	<script src="../tui/bower_components/to-mark/dist/to-mark.js"></script>
+	<script src="../tui/bower_components/tui-code-snippet/dist/tui-code-snippet.js"></script>
+	<script src="../tui/bower_components/codemirror/lib/codemirror.js"></script>
+	<script src="../tui/bower_components/highlightjs/highlight.pack.js"></script>
+	<script src="../tui/bower_components/squire-rte/build/squire-raw.js"></script>
+	<script src="../tui/bower_components/tui-editor/dist/tui-editor-Editor.js"></script>
+	<link rel="stylesheet" href="../tui/bower_components/codemirror/lib/codemirror.css">
+	<link rel="stylesheet" href="../tui/bower_components/highlightjs/styles/github.css">
+	<link rel="stylesheet" href="../tui/bower_components/tui-editor/dist/tui-editor.css">
+	<link rel="stylesheet" href="../tui/bower_components/tui-editor/dist/tui-editor-contents.css">
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -40,7 +53,7 @@
   </div>
   <div class="form-group">
     <label for="content">내용 :</label>
-    <textarea class="form-control" rows="5" id="content" name="content" ></textarea>
+ <textarea class="form-control" rows="5" id="content" name="content" ></textarea>	
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
   <input type="button" class="btn btn-primary" onclick="location.href='board.php'" value="목록보기">

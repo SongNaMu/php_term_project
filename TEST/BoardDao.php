@@ -96,7 +96,7 @@ count는 조회수 테이블에서 각 post_num이 가지는 user_id의 갯수
       }
     }
 
-    //회원번호 반환 함수
+    //글 번호로 게시글 상세정보
     function getMsg($num){
       try{
        // $sql = "select b.num, b.title, b.content, b.regtime, b.hits, b.writer, m.name
@@ -150,7 +150,7 @@ count는 조회수 테이블에서 각 post_num이 가지는 user_id의 갯수
 				on b.num = h.post_num
 				join member m
 				on b.writer = m.id
-				order by b.regtime, b.num	
+				order by b.regtime desc, b.num desc
 				limit :startRecord, :count";
         $pstmt = $this->db->prepare($sql);
         $pstmt->bindValue(":startRecord", $startRecord, PDO::PARAM_INT);

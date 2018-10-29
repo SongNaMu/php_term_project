@@ -135,20 +135,20 @@ page link 만들어 주기
     if($currentPage < 1 | !$currentPage)
       $currentPage = 1;
     $msgs = $Bdao->getManyMesgs(NUM_LINES*($currentPage-1),NUM_LINES);
-  echo "왜 안나와 currentPage = $currentPage,".NUM_LINES*($currentPage-1).", ".NUM_LINES."";
 	?>
 </head>
 <body>
-  <li><a href="./model/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+	<?php require("./template/header.php");?>
   <div class="container">
     <div id="logo"><h2>게시글 리스트</h2></div>
     <div id="btn-group">
-      <?php if(isset($_SESSION["id"])):?>
+<!--      <?php if(isset($_SESSION["id"])):?>
         <button class="btn btn-danger" onclick="location.href='logout.php'">로그아웃</button>
       <?php else: ?>
         <button class="btn btn-success" onclick="location.href='login_form.php'">로그인</button>
         <button class="btn btn-primary"onclick="location.href='register_form.php'">회원가입</button>
       <?php endif?>
+			-->
     </div>
   </div>
 <?php if(isset($_SESSION["id"])) : ?>
