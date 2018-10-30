@@ -42,7 +42,19 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <style>
+    <script src="../tui/bower_components/jquery/dist/jquery.js"></script>
+  	<script src='../tui/bower_components/markdown-it/dist/markdown-it.js'></script>
+  	<script src="../tui/bower_components/to-mark/dist/to-mark.js"></script>
+  	<script src="../tui/bower_components/tui-code-snippet/dist/tui-code-snippet.js"></script>
+  	<script src="../tui/bower_components/codemirror/lib/codemirror.js"></script>
+  	<script src="../tui/bower_components/highlightjs/highlight.pack.js"></script>
+  	<script src="../tui/bower_components/squire-rte/build/squire-raw.js"></script>
+  	<script src="../tui/bower_components/tui-editor/dist/tui-editor-Editor.js"></script>
+  	<link rel="stylesheet" href="../tui/bower_components/codemirror/lib/codemirror.css">
+  	<link rel="stylesheet" href="../tui/bower_components/highlightjs/styles/github.css">
+  	<link rel="stylesheet" href="../tui/bower_components/tui-editor/dist/tui-editor.css">
+  	<link rel="stylesheet" href="../tui/bower_components/tui-editor/dist/tui-editor-contents.css">
+		<style>
 	  .hiddenform{
 	    display : none;
 		margin-left : 20px;
@@ -68,7 +80,7 @@
     </style>
 	<script>
 		function mkform(num){
-		  divEl = document.getElementById(num);	
+		  divEl = document.getElementById(num);
 		  classN = document.getElementsByClassName("hiddenform");
 
 		  if(divEl.style.display == "block"){
@@ -109,7 +121,7 @@
         </tr>
       </table>
       <hr>
-
+      <p id="dummycontent"style="display:none"><?=$msg["content"]?></p>
 			<!-- 댓글 -->
 			<b>전체 댓글</b>
 			<ul>
@@ -119,7 +131,7 @@
           <li class="list-group-item list-group-item-primary" onclick="mkform(<?=$row["num"]?>);">
             <?= $row["name"]." : ".$row["content"]." <b>". $row["regtime"]."</b>" ?><button onclick="location.href='deleteComment.php?num=<?=$row["num"]?>'">댓글삭제</button>
           </li>
-  		  
+
 		  <div class="hiddenform" id="<?= $row["num"] ?>">
 	  		<form class="form" action="insertRecomment.php" method="post">
 	   		  <div class="form-group">
@@ -164,10 +176,18 @@
 			}
 ?>
 	</div>
-	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-		document.getElementById('content').innerHTML=
-			marked('<?= $msg["content"] ?>');
-	</script>
+
+  //var st = document.getElementById('content').innerHTML;
+  //document.getElementById('content').innerHTML = marked(st);
+
+  var editor = new tui.Editor.factory({
+    el: document.querySelector('#content'),
+    height: '1500px',
+    viewer: true,
+    initialValue: document.getElementById('dummycontent').innerHTML
+  });
+  </script>
 	</body>
 </html>

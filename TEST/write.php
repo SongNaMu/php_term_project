@@ -23,14 +23,17 @@
   $writer = isset($_SESSION["id"])? $_SESSION["id"] : "";
   $title = requestValue("title");
   $content = requestValue("content");
+  echo "$content<br>$title";
 
-  if($writer && $title && $content){
+  if(!$title || !$content){
+    echo "error";
+    errorBack("다 입력하시오");
+  }else{
+    echo "다 입력됨";
     $dao = new BoardDao();
     $dao->insertMsg($writer, $title, $content);
     okGo("글의 입력이 완료되었습니다.", "board.php");
   }
-  else{
-    errorBack("다 입력하시오 $writer, $title, $content");
-  }
+  echo" 끝";
 
 ?>

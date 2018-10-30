@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script src="../tui/bower_components/jquery/dist/jquery.js"></script>
+  	<script src='../tui/bower_components/markdown-it/dist/markdown-it.js'></script>
+  	<script src="../tui/bower_components/to-mark/dist/to-mark.js"></script>
+  	<script src="../tui/bower_components/tui-code-snippet/dist/tui-code-snippet.js"></script>
+  	<script src="../tui/bower_components/codemirror/lib/codemirror.js"></script>
+  	<script src="../tui/bower_components/highlightjs/highlight.pack.js"></script>
+  	<script src="../tui/bower_components/squire-rte/build/squire-raw.js"></script>
+  	<script src="../tui/bower_components/tui-editor/dist/tui-editor-Editor.js"></script>
+  	<link rel="stylesheet" href="../tui/bower_components/codemirror/lib/codemirror.css">
+  	<link rel="stylesheet" href="../tui/bower_components/highlightjs/styles/github.css">
+  	<link rel="stylesheet" href="../tui/bower_components/tui-editor/dist/tui-editor.css">
+  	<link rel="stylesheet" href="../tui/bower_components/tui-editor/dist/tui-editor-contents.css">
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
@@ -22,12 +34,12 @@
   <?php
     require_once("BoardDao.php");
     require_once("./../tools.php");
-	
+
     $db = new BoardDao();
     $num = requestValue("num");
 	$currentPage = requestValue("page");
 	$row = $db->getMsg($num);
-	
+
 	/* 게시글 수정 폼
 	  1. 세션의 유무 확인
 	   1.1 세션의 id와 글작성자의id가 일치하는지 확인
@@ -59,11 +71,28 @@
   </div>
   <div class="form-group">
     <label for="content">내용 :</label>
-    <textarea class="form-control" rows="5" id="content" name="content"><?=$row["content"]?></textarea>
+    <div id="editSection"></div>
+    <textarea type="hidden" id="content" name="content" style="display: none"><?= $row["content"]?></textarea>
+
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
   <input type="button" class="btn btn-primary" onclick="location.href='board.php'" value="목록보기">
 </form>
   </div>
+  <script>
+    var st = document.getElementById("content").innerHTML;
+    var editor = new tui.Editor({
+      el: document.querySelector('#editSection'),
+      initialEditType: 'wysiwyg',
+      previewStyle: 'vertical',
+      height: '300px',
+      initialValue: st,
+  		events: {
+  			change: function(){
+  				document.getElementById("content").value = this.editor.getValue();
+  			}
+  		}
+    });
+  </script>
 </body>
 </html>

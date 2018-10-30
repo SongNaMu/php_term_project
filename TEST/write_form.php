@@ -58,7 +58,7 @@
   	</div>
 		<input type="hidden" id="content" name="content">
   <button type="submit" class="btn btn-primary" id="execute">Submit</button>
-</form> 
+</form>
  	<input type="button" class="btn btn-primary" onclick="location.href='board.php'" value="목록보기">
 
 

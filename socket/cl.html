@@ -1,0 +1,19 @@
+<html>
+<head>
+</head>
+<body>
+<h1>socket</h1>
+<script>
+	var socket = io.connect('192.168.226.101:8001/chat');
+ocket.on('connect', function() {
+								    socket.emit('login', { uid: 'writer1' });
+										});
+ 
+// 서버측에서 socket.send(msg); 한것을 받아 살행
+socket.on('message', function (msg) {
+								    document.write(msg);
+										});
+
+</script>
+</body>
+</html>
